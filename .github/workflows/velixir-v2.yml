@@ -1,15 +1,18 @@
-name: Deploy to Velixir
+name: Deploy Panah X V2 to Velixir
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Install Velixir CLI
         run: |
@@ -17,12 +20,13 @@ jobs:
           echo "$HOME/.velixir/bin" >> "$GITHUB_PATH"
           "$HOME/.velixir/bin/velixir" --version
 
-      - name: Login to Velixir
+      - name: Authenticate with Velixir
         env:
-          VELIXIR_API_KEY: ${{ secrets.VELIXIR_API_KEY }}
+          VELIXIR_API_KEY: ${{ secrets.VELIXIR_PANAHX_V2_API_KEY }}
         run: |
           "$HOME/.velixir/bin/velixir" login --key "$VELIXIR_API_KEY"
 
-      - name: Deploy to Velixir
+      - name: Deploy Panah X
         run: |
-          "$HOME/.velixir/bin/velixir" deploy --app 9d026628-41fc-4394-93cf-743c050256ed
+          "$HOME/.velixir/bin/velixir" deploy \
+            --app 1b79169a-00ad-4c75-babf-7998f7ce46c7
