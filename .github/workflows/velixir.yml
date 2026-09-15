@@ -14,10 +14,21 @@ jobs:
       - name: Install Velixir CLI
         run: |
           curl -fsSL https://velixir.net/install.sh | sh
-          echo "$HOME/.velixir/bin" >> "$GITHUB_PATH"
           "$HOME/.velixir/bin/velixir" --version
+          file "$HOME/.velixir/bin/velixir"
 
-      - name: Inspect Velixir CLI
+      - name: Inspect CLI
         run: |
-          "$HOME/.velixir/bin/velixir" deploy --help
+          "$HOME/.velixir/bin/velixir" --help || true
+          "$HOME/.velixir/bin/velixir" deploy --help || true
+
+      - name: Check API key
+        env:
+          VELIXIR_API_KEY: ${{ secrets.VELIXIR_API_KEY }}
+        run: |
+          if [ -z "$VELIXIR_API_KEY" ]; then
+            echo "ERROR: VELIXIR_API_KEY secret is empty or missing"
+            exit 1
+          fi
+          echo "VELIXIR_API_KEY is present."
 
