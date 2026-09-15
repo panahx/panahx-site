@@ -1,24 +1,16 @@
-name: Deploy Panah X to Velixir
+name: Deploy to velixir
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install Velixir CLI
-        run: |
-          curl -fsSL https://velixir.net/install.sh | sh
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-
-      - name: Deploy to Velixir
+      - name: Deploy to velixir
+        uses: velixir/velixir/actions/deploy@v1
         env:
           VELIXIR_API_KEY: ${{ secrets.VELIXIR_API_KEY }}
-        run: velixir deploy --prod --app 9d026628-41fc-4394-93cf-743c050256ed
