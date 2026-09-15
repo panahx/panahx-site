@@ -17,8 +17,12 @@ jobs:
           echo "$HOME/.velixir/bin" >> "$GITHUB_PATH"
           "$HOME/.velixir/bin/velixir" --version
 
-      - name: Deploy
+      - name: Login to Velixir
         env:
           VELIXIR_API_KEY: ${{ secrets.VELIXIR_API_KEY }}
+        run: |
+          "$HOME/.velixir/bin/velixir" login --api-key "$VELIXIR_API_KEY"
+
+      - name: Deploy
         run: |
           "$HOME/.velixir/bin/velixir" deploy --app 9d026628-41fc-4394-93cf-743c050256ed
