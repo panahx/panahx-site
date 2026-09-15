@@ -1,0 +1,19 @@
+name: Deploy Panah X to Velixir
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to Velixir
+        uses: velixir/velixir/actions/deploy@v1
+        with:
+          api-key: ${{ secrets.VELIXIR_API_KEY }}
