@@ -14,10 +14,11 @@ jobs:
       - name: Install Velixir CLI
         run: |
           curl -fsSL https://velixir.net/install.sh | sh
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          echo "$HOME/.velixir/bin" >> "$GITHUB_PATH"
+          "$HOME/.velixir/bin/velixir" --version
 
       - name: Deploy
         env:
           VELIXIR_API_KEY: ${{ secrets.VELIXIR_API_KEY }}
         run: |
-          velixir deploy --app 9d026628-41fc-4394-93cf-743c050256ed
+          "$HOME/.velixir/bin/velixir" deploy --app 9d026628-41fc-4394-93cf-743c050256ed
