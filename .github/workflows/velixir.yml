@@ -17,10 +17,7 @@ jobs:
           echo "$HOME/.velixir/bin" >> "$GITHUB_PATH"
           "$HOME/.velixir/bin/velixir" --version
 
-      - name: Inspect Velixir CLI login
+      - name: Inspect Velixir CLI
         run: |
-          "$HOME/.velixir/bin/velixir" login --help
+          "$HOME/.velixir/bin/velixir" deploy --help
 
-      - name: Deploy
-        run: |
-          "$HOME/.velixir/bin/velixir" deploy --app 9d026628-41fc-4394-93cf-743c050256ed
